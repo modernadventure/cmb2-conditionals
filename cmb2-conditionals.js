@@ -13,8 +13,6 @@ jQuery( document ).ready( function( $ ) {
 		};
 	});
 
-        // $('#page_template').off('change');
-
 	/**
 	 * Set up the functionality for CMB2 conditionals.
 	 */
@@ -30,14 +28,11 @@ jQuery( document ).ready( function( $ ) {
 			conditionContext = 'body';
 		}
 		conditionContext = $( conditionContext );
-                // console.log(conditionContext);
 
 		/**
 		 * Set up event listener for any changes in the form values, including on new elements.
 		 */
-          // changeContext.on( 'change', 'input, textarea, select:not("#page_template")', function( evt ) {
           changeContext.on( 'change', 'input, textarea, select', function( evt ) {
-                  // console.log(evt);
 			var elm       = $( this ),
 				fieldName = $( this ).attr( 'name' ),
 				dependants,
@@ -45,13 +40,11 @@ jQuery( document ).ready( function( $ ) {
 				checkedValues,
 				elmValue;
 
-                        // console.log(elm);
 			// Is there an element which is conditional on this element ?
 			dependants = CMB2ConditionalsFindDependants( fieldName, elm, conditionContext );
 
 			// Only continue if we actually have dependants.
 			if ( dependants.length > 0 ) {
-            // console.log(dependants);
 
 				// Figure out the value for the current element.
 				if ( 'checkbox' === elm.attr( 'type' ) ) {
@@ -62,11 +55,6 @@ jQuery( document ).ready( function( $ ) {
 					if ( $( '[name="' + fieldName + '"]' ).is( ':checked' ) ) {
 						elmValue = elm.val();
 					}
-				// } else if ( 'select' === elm.attr( 'type' ) ) {
-    //                               console.log('hi');
-				// 	// if ( $( '[name="' + fieldName + '"]' ).is( ':checked' ) ) {
-				// 	// 	elmValue = elm.val();
-				// 	// }
 				} else {
 					elmValue = CMB2ConditionalsStringToUnicode( evt.currentTarget.value );
 				}
@@ -177,10 +165,7 @@ jQuery( document ).ready( function( $ ) {
 		requiredElms.data( 'conditional-required', requiredElms.prop( 'required' ) ).prop( 'required', false );
 
 		// Hide all conditional elements
-          // console.log(conditionContext);
-		// $( '[data-conditional-id]', conditionContext ).parents( '.cmb-row:first' ).hide();
-		$( '[data-conditional-id]', conditionContext ).parents( '.cmb-row' ).hide();
-          // console.log($('[data-conditional-id]', conditionContext).parents('.cmb-row'));
+		$( '[data-conditional-id]', conditionContext ).parents( '.cmb-row:first' ).hide();
 
 		// Selectively trigger the change event.
 		uniqueFormElms = [];
@@ -190,15 +175,10 @@ jQuery( document ).ready( function( $ ) {
 				uniqueFormElms.push( elmName );
 			}
 		});
-                // console.log(uniqueFormElms);
 		for ( loopI = 0; loopI < uniqueFormElms.length; loopI++ ) {
 			formElms = $( '[name="' + uniqueFormElms[loopI] + '"]' );
-                        // console.log(uniqueFormElms[loopI]);
-                        // console.log(formElms);
-                  // console.log(formElms.is(':checked'));
                         // Radio, checkbox, or option (select) elements
 			if ( 1 === formElms.length || ! formElms.is( ':checked' ) ) {
-                                console.log(formElms.attr('id'));
                           if (formElms.attr('id') != 'page_template') {
 				formElms.trigger( 'change' );
                           }
@@ -236,7 +216,6 @@ jQuery( document ).ready( function( $ ) {
 	 * Allows for within group dependencies and multi-check dependencies.
 	 */
 	function CMB2ConditionalsFindDependants( fieldName, elm, context ) {
-          // console.log(fieldName);
 		var inGroup, iterator;
 		var dependants = [];
 
@@ -258,7 +237,6 @@ jQuery( document ).ready( function( $ ) {
 		// Else within the whole form.
 		else {
 			dependants = $( '[data-conditional-id="' + fieldName + '"]', context );
-          // console.log(dependants);
 		}
 		}
 		return dependants;
