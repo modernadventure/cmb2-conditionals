@@ -246,10 +246,17 @@ if ( ! class_exists( 'CMB2_Conditionals', false ) ) {
 					return $data_to_save;
 				}
 
+                                /*
+                                 * This is incorrectly filtering out fields
+                                 * that are conditional based on a select
+                                 * dropdown.
+                                 */
+                                /*
 				if ( ( ! is_array( $conditional_value ) && ! is_array( $data_to_save[ $conditional_id ] ) ) && $data_to_save[ $conditional_id ] != $conditional_value ) {
 					unset( $data_to_save[ $field_id ] );
 					return $data_to_save;
 				}
+                                */
 
 				if ( is_array( $conditional_value ) || is_array( $data_to_save[ $conditional_id ] ) ) {
 					$match = array_intersect( (array) $conditional_value, (array) $data_to_save[ $conditional_id ] );
